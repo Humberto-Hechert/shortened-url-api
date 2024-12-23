@@ -43,6 +43,7 @@ services:
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
       DATABASE_SCHEMA: ${DATABASE_SCHEMA}
       DATABASE_SYNC: ${DATABASE_SYNC}
+      JWT_SECRET: ${JWT_SECRET}
     ports:
       - "3077:3077"
     networks:
