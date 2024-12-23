@@ -20,6 +20,11 @@ export class UserController {
     return this.userService.findOne(id);
   }
 
+  @Post('findMail')
+  async findByEmail(@Body('email') email: string) {
+    return this.userService.findByEmail(email);
+  }
+
   @Put(':id')
   update(
     @Param('id', ParseIntPipe) id: number,
