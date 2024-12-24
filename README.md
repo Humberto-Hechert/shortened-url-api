@@ -1,99 +1,114 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# URL Shortener API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Esta é uma API para encurtar URLs. Ela fornece endpoints para criar, listar, atualizar, deletar e redirecionar URLs curtas. Esta API é construída com NestJS, utiliza PostgreSQL como banco de dados e JWT para autenticação.
 
-## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Pré-requisitos
 
-## Project setup
+Antes de rodar a aplicação, certifique-se de que você tem o Docker e o Docker Compose instalados em sua máquina.
+
+ - [Instalar o Docker](https://docs.docker.com/engine/install/)
+ - [Instalar Docker Compose](https://docs.docker.com/compose/install/)
+
+
+## Configuração
+
+### Variáveis de Ambiente
+
+Certifique-se de criar um arquivo .env na raiz do projeto com as seguintes variáveis de ambiente:
 
 ```bash
-$ npm install
+DATABASE_HOST=postgres
+DATABASE_PORT=5432
+DATABASE_USER=your_database_user
+DATABASE_PASSWORD=your_database_password
+DATABASE_SCHEMA=your_database_schema
+DATABASE_SYNC="true"
+JWT_SECRET=your_jwt_secret
+PGADMIN_EMAIL=your_pgadmin_email
+PGADMIN_PASSWORD=your_pgadmin_password
 ```
+### Docker Compose
+Este projeto usa o Docker Compose para orquestrar os containers necessários para rodar a aplicação. Ele inclui:
 
-## Compile and run the project
+- PostgreSQL: Banco de dados onde as URLs serão armazenadas.
+- pgAdmin: Interface de administração do PostgreSQL.
+- Aplicação (API): A própria API que você está rodando.
+
+### Rodando a API com Docker
+Para rodar a aplicação e o banco de dados usando Docker Compose, siga os passos abaixo:
+
+- Clone o repositório para o seu ambiente local (https://github.com/Humberto-Hechert/shortened-url-api):
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+git clone https://github.com/Humberto-Hechert/shortened-url-api.git
+cd url-shortener-api
 ```
 
-## Run tests
+- Configure as Variáveis de Ambiente: Crie o arquivo .env na raiz do projeto com as variáveis de ambiente mencionadas acima.
+
+-Inicie os containers: No diretório raiz do projeto, execute os comandos abaixo para iniciar os containers:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+docker compose build
+docker compose up -d
 ```
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- Acessando a API
+Após a inicialização dos containers, a API estará disponível na porta 3077. Você pode testar os endpoints da API em:
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+http://localhost:3077
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+- Acessando o pgAdmin para visualização gráfica dos dados no banco
+O pgAdmin estará disponível na porta 5050. Acesse o pgAdmin através do navegador usando:
 
-## Resources
+```bash
+http://localhost:5050
+```
+- Email: O email configurado nas variáveis de ambiente (PGADMIN_EMAIL).
+- Senha: A senha configurada nas variáveis de ambiente (PGADMIN_PASSWORD).
 
-Check out a few resources that may come in handy when working with NestJS:
+A aplicação se conecta ao banco de dados PostgreSQL rodando no container postgres. O banco de dados estará disponível na porta 5433 localmente, mas a aplicação usa a porta padrão 5432 dentro do Docker.
+## Endpoints da API
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+#### Obs: Para a utilização de alguns dos endpoints a seguir, é necessário ter um usuário criado. A documentação detalhada da criação de usuário você pode encontrar no arquivo feito com swagger através do caminho: 
 
-## Support
+```bash
+http://localhost:3077/api
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+#### Cria uma URL encurtada
 
-## Stay in touch
+```http
+  POST /urls/shorten
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `originalUrl` | `string` | **Obrigatório**. URL original que deseja encurtar |
 
-## License
+#### Retorna todas URLs
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```http
+  GET /urls
+```
+
+#### Atualiza URL original
+
+```http
+  PUT /urls/:id
+```
+
+| Parâmetro   | Tipo       | Descrição                           |
+| :---------- | :--------- | :---------------------------------- |
+| `originalUrl` | `string` | **Obrigatório**. URL original que deseja atualizar |
+
+
+#### Deleta URL
+
+```http
+  DELETE /urls/:id
+```
