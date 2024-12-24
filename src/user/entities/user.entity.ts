@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Url } from 'src/url/entities/url.entity';
 
 @Entity()
 export class User {
@@ -10,5 +11,7 @@ export class User {
 
   @Column()
   password: string;
-  
+
+  @OneToMany(() => Url, (url) => url.user)
+  urls: Url[]; 
 }

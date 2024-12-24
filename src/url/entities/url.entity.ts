@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from '../../user/entities/user.entity';
+import { User } from 'src/user/entities/user.entity';
 
 @Entity()
 export class Url {
@@ -12,9 +12,12 @@ export class Url {
   @Column()
   shortUrl: string;
 
-  @ManyToOne(() => User, user => user.id)
+  @ManyToOne(() => User, (user) => user.urls, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
-  user: User;
+  user: User; 
+
+  @Column({ nullable: true })
+  userId: number | null; 
 
   @Column({ default: 0 })
   clickCount: number;
@@ -26,5 +29,5 @@ export class Url {
   updatedAt: Date;
 
   @Column({ nullable: true })
-  deletedAt: Date;
+  deletedAt: Date | null;
 }
